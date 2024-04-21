@@ -14,12 +14,15 @@
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+        <!-- We use the last SpringBoot version compatible with Java 11 -->
+        <!-- This because we need to run Hibernate OGM that doesn't wort with Java 17 -->
         <springboot.version>2.7.18</springboot.version>
     </properties>
 
     <modules>
         <module>mongodb-native-application</module>
         <module>mongodb-ogm-application</module>
+        <module>dataset-util</module>
     </modules>
 
     <dependencyManagement>
