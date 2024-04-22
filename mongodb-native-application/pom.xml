@@ -11,4 +11,11 @@
 
     <artifactId>mongodb-native-application</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>fax.play</groupId>
+            <artifactId>dataset-util</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>
