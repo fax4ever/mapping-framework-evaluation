@@ -15,26 +15,26 @@ public class DatasetLoader {
    private static final String CREDITS = "/credits.csv";
    private static final String TITLES = "/titles.csv";
 
-   public Stream<CreditDto> credits(Provider provider) {
+   public Stream<CreditDto> credits(Platform platform) {
       try {
-         return StreamSupport.stream(csvParser(provider, CREDITS).spliterator(), true)
+         return StreamSupport.stream(csvParser(platform, CREDITS).spliterator(), true)
                .map(CreditDto::new);
       } catch (IOException e) {
          throw new RuntimeException(e);
       }
    }
 
-   public Stream<TitleDto> titles(Provider provider) {
+   public Stream<TitleDto> titles(Platform platform) {
       try {
-         return StreamSupport.stream(csvParser(provider, TITLES).spliterator(), true)
+         return StreamSupport.stream(csvParser(platform, TITLES).spliterator(), true)
                .map(TitleDto::new);
       } catch (IOException e) {
          throw new RuntimeException(e);
       }
    }
 
-   private CSVParser csvParser(Provider provider, String fileName) throws IOException {
-      String file = provider.access() + fileName;
+   private CSVParser csvParser(Platform platform, String fileName) throws IOException {
+      String file = platform.access() + fileName;
       var inputStream = this.getClass().getClassLoader().getResourceAsStream(file);
       if (inputStream == null) {
          throw new RuntimeException("File not found: " + file);
