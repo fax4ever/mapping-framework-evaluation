@@ -11,14 +11,14 @@ public class TitleDto {
 
    private final String id;
    private final String title;
-   private final String type;
+   private final Type type;
    private final String description;
    private final int releaseYear;
    private final String ageCertification;
    private final int runtime;
    private final Set<String> genres;
    private final Set<String> productionCountries;
-   private final String seasons;
+   private final Integer seasons;
    private final String imdbId;
    private final BigDecimal imdbScore;
    private final Integer imdbVotes;
@@ -28,14 +28,14 @@ public class TitleDto {
    public TitleDto(CSVRecord record) {
       this.id = record.get(0);
       this.title = record.get(1);
-      this.type = record.get(2);
+      this.type = Type.valueOf(record.get(2));
       this.description = record.get(3);
       this.releaseYear = Integer.parseInt(record.get(4));
       this.ageCertification = record.get(5);
       this.runtime = Integer.parseInt(record.get(6));
       this.genres = parseArray(record.get(7));
       this.productionCountries = parseArray(record.get(8));
-      this.seasons = record.get(9);
+      this.seasons = nullableFloatString(record.get(9));
       this.imdbId = record.get(10);
       this.imdbScore = nullableBigDecimal(record.get(11));
       this.imdbVotes = nullableFloatString(record.get(12));
@@ -49,7 +49,7 @@ public class TitleDto {
    public String title() {
       return title;
    }
-   public String type() {
+   public Type type() {
       return type;
    }
    public String description() {
@@ -70,7 +70,7 @@ public class TitleDto {
    public Set<String> productionCountries() {
       return productionCountries;
    }
-   public String seasons() {
+   public Integer seasons() {
       return seasons;
    }
    public String imdbId() {

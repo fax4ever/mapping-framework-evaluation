@@ -35,10 +35,18 @@ public class DatasetLoaderTest {
    }
 
    @Test
-   public void test() {
+   public void productionCountries() {
       Set<String> collect = testTarget.titles(Platform.NETFLIX)
             .flatMap(title -> title.productionCountries().stream())
             .collect(Collectors.toSet());
+      assertThat(collect).isNotEmpty();
+   }
+
+   @Test
+   public void seasons() {
+      Set<Integer> collect = testTarget.titles(Platform.HBO_MAX)
+              .map(title -> title.seasons())
+              .collect(Collectors.toSet());
       assertThat(collect).isNotEmpty();
    }
 }

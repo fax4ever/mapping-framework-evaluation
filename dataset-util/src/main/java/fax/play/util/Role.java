@@ -1,6 +1,6 @@
 package fax.play.util;
 
-public enum CreditRole {
+public enum Role {
 
    ACTOR, DIRECTOR
 

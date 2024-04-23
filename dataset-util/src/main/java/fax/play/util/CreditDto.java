@@ -8,14 +8,14 @@ public class CreditDto {
    private final String id;
    private final String name;
    private final String character;
-   private final CreditRole role;
+   private final Role role;
 
    public CreditDto(CSVRecord record) {
       personId = Integer.parseInt(record.get(0));
       id = record.get(1);
       name = record.get(2);
       character = record.get(3);
-      role = CreditRole.valueOf(record.get(4));
+      role = Role.valueOf(record.get(4));
    }
 
    public int personId() {
@@ -30,7 +30,7 @@ public class CreditDto {
    public String character() {
       return character;
    }
-   public CreditRole role() {
+   public Role role() {
       return role;
    }
 
