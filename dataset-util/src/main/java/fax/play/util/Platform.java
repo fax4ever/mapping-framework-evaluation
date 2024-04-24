@@ -14,4 +14,14 @@ public enum Platform {
    String access() {
       return access;
    }
+
+   public static Platform find(String string) {
+      Platform[] values = Platform.values();
+      for (Platform value : values) {
+         if (value.name().equalsIgnoreCase( string ) || value.access.equalsIgnoreCase( string )) {
+            return value;
+         }
+      }
+      return null;
+   }
 }

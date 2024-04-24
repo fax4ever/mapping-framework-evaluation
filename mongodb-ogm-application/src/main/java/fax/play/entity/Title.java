@@ -33,4 +33,7 @@ public class Title {
 
 	private Integer seasons;
 
+	@ManyToMany
+	private List<Platform> platforms;
+
 }
