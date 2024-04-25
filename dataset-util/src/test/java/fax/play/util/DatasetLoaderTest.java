@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.json.YamlJsonParser;
 
 public class DatasetLoaderTest {
 
@@ -53,5 +54,11 @@ public class DatasetLoaderTest {
             .map(title -> title.seasons())
             .collect(Collectors.toSet());
       assertThat(collect).isNotEmpty();
+   }
+
+   @Test
+   public void parseJson() {
+      List<Object> objects = new YamlJsonParser().parseList("['documentation']");
+      assertThat(objects).containsExactly("documentation");
    }
 }

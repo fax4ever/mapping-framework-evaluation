@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.csv.CSVRecord;
-import org.springframework.boot.json.JsonParserFactory;
+import org.springframework.boot.json.YamlJsonParser;
 
 public class TitleDto {
 
@@ -104,7 +104,7 @@ public class TitleDto {
    }
 
    private static Set<String> parseArray(String array) {
-      return JsonParserFactory.getJsonParser().parseList(array).stream()
+      return new YamlJsonParser().parseList(array).stream()
             .map(o -> (String) o)
             .collect(Collectors.toSet());
    }
