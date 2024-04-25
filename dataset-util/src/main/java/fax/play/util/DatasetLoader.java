@@ -15,25 +15,33 @@ import org.apache.commons.csv.CSVParser;
 
 public class DatasetLoader {
 
+   private static final int CHUNK_SIZE = 100;
    private static final String CREDITS = "/credits.csv";
    private static final String TITLES = "/titles.csv";
-   private static final int CHUNK_SIZE = 100;
 
-   public Stream<List<CreditDto>> credits(Platform platform) {
+   Stream<List<CreditDto>> credits(Platform platform) {
+      return credits(platform, CHUNK_SIZE);
+   }
+
+   public Stream<List<CreditDto>> credits(Platform platform, int chunkSize) {
       try {
          Stream<CreditDto> simpleStream = StreamSupport.stream(csvParser(platform, CREDITS).spliterator(), true)
                .map(CreditDto::new);
-         return chunk(simpleStream, CHUNK_SIZE);
+         return chunk(simpleStream, chunkSize);
       } catch (IOException e) {
          throw new RuntimeException(e);
       }
    }
 
-   public Stream<List<TitleDto>> titles(Platform platform) {
+   Stream<List<TitleDto>> titles(Platform platform) {
+      return titles(platform, CHUNK_SIZE);
+   }
+
+   public Stream<List<TitleDto>> titles(Platform platform, int chunkSize) {
       try {
          Stream<TitleDto> simpleStream = StreamSupport.stream(csvParser(platform, TITLES).spliterator(), true)
                .map(TitleDto::new);
-         return chunk(simpleStream, CHUNK_SIZE);
+         return chunk(simpleStream, chunkSize);
       } catch (IOException e) {
          throw new RuntimeException(e);
       }

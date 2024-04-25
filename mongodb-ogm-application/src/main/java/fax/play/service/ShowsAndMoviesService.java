@@ -21,6 +21,8 @@ import fax.play.util.Platform;
 @Service
 public class ShowsAndMoviesService {
 
+   private final static int CHUNK_SIZE = 50;
+
    private SessionFactory sessionFactory;
 
    @PostConstruct
@@ -35,7 +37,8 @@ public class ShowsAndMoviesService {
 
    public void load(Platform platform) {
       DatasetLoader loader = new DatasetLoader();
-      Stream<List<CreditDto>> credits = loader.credits(platform);
+      Stream<List<CreditDto>> credits = loader.credits(platform, CHUNK_SIZE);
+      ShowsAndMoviesLogger logger = new ShowsAndMoviesLogger("LOADS from " + platform, CHUNK_SIZE);
       try (Session session = sessionFactory.openSession()) {
          credits.forEach(chunk -> {
             Transaction transaction = session.beginTransaction();
@@ -43,12 +46,14 @@ public class ShowsAndMoviesService {
                for (CreditDto creditDto : chunk) {
                   load(session, creditDto);
                }
-               transaction.commit();
                session.flush();
+               session.clear();
+               transaction.commit();
+               logger.chunkExecuted();
             } catch (Exception ex) {
                transaction.rollback();
+               logger.chunkRollback(ex);
             }
-            session.clear();
          });
       }
    }
