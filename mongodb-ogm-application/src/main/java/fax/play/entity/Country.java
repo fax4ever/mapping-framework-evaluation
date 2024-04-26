@@ -9,6 +9,9 @@ public class Country {
 	@Id
 	private String name;
 
+	public Country() {
+	}
+
 	public String getName() {
 		return name;
 	}

@@ -2,7 +2,6 @@ package fax.play.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -16,6 +15,7 @@ import org.hibernate.Transaction;
 import org.springframework.stereotype.Service;
 
 import fax.play.entity.Country;
+import fax.play.entity.Credit;
 import fax.play.entity.Genre;
 import fax.play.entity.Person;
 import fax.play.entity.Title;
@@ -116,6 +116,7 @@ public class ShowsAndMoviesService {
          if (genre == null) {
             genre = new Genre();
             genre.setName(name);
+            session.persist(genre);
          }
          return genre;
       }).collect(Collectors.toList());
@@ -126,6 +127,7 @@ public class ShowsAndMoviesService {
          if (country == null) {
             country = new Country();
             country.setName(name);
+            session.persist(country);
          }
          return country;
       }).collect(Collectors.toList());
@@ -146,10 +148,12 @@ public class ShowsAndMoviesService {
          session.persist(person);
       }
 
-//      String creditId = creditDto.id();
-//      Credit credit = session.load(Credit.class, creditId);
-//      if (credit == null) {
-//
-//      }
+      String creditId = creditDto.titleId();
+      Credit credit = session.load(Credit.class, creditId);
+      if (credit == null) {
+         credit = new Credit();
+         credit.setCharacter(creditDto.character());
+
+      }
    }
 }

@@ -1,6 +1,8 @@
 package fax.play.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
@@ -10,6 +12,7 @@ import fax.play.util.Role;
 public class Credit {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String id;
 
 	@ManyToOne
@@ -23,14 +26,6 @@ public class Credit {
 	private Role role;
 
 	public Credit() {
-	}
-
-	public Credit(String id, Person person, Title title, String character, Role role) {
-		this.id = id;
-		this.person = person;
-		this.title = title;
-		this.character = character;
-		this.role = role;
 	}
 
 	public String getId() {
