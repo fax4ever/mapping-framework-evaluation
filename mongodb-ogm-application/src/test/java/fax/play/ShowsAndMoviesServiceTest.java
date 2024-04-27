@@ -19,7 +19,7 @@ public class ShowsAndMoviesServiceTest {
 
    @Test
    public void load() {
-      service.load(Platform.NETFLIX);
+      service.load(Platform.DISNEY_PLUS);
    }
 
    @Test

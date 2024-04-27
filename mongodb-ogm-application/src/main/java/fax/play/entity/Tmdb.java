@@ -2,8 +2,6 @@ package fax.play.entity;
 
 import java.math.BigDecimal;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
@@ -11,8 +9,7 @@ import javax.persistence.OneToOne;
 public class Tmdb {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private String id;
 
 	private BigDecimal popularity;
 
@@ -21,4 +18,35 @@ public class Tmdb {
 	@OneToOne
 	private Title title;
 
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public BigDecimal getPopularity() {
+		return popularity;
+	}
+
+	public void setPopularity(BigDecimal popularity) {
+		this.popularity = popularity;
+	}
+
+	public BigDecimal getScore() {
+		return score;
+	}
+
+	public void setScore(BigDecimal score) {
+		this.score = score;
+	}
+
+	public Title getTitle() {
+		return title;
+	}
+
+	public void setTitle(Title title) {
+		this.title = title;
+	}
 }

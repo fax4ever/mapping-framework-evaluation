@@ -19,7 +19,7 @@ public class ShowsAndMoviesRest {
    public ShowsAndMoviesService service;
 
    @PostMapping("/load/{platform}")
-   public void load(@PathVariable String string) {
+   public void load(@PathVariable("platform") String string) {
       Platform platform = Platform.find(string);
       if (platform == null) {
          throw new RuntimeException("Platform not found: string");

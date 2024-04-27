@@ -136,6 +136,7 @@ public class ShowsAndMoviesService {
 
       title = new Title();
       title.setId(id);
+      title.setTitle(titleDto.title());
       title.setType(titleDto.type());
       title.setDescription(titleDto.description());
       title.setReleaseYear(titleDto.releaseYear());
@@ -169,6 +170,24 @@ public class ShowsAndMoviesService {
       platforms.add(platformEntity);
       title.setPlatforms(platforms);
       session.persist(title);
+
+      if (!titleDto.imdbId().isEmpty()) {
+         Imdb imdb = new Imdb();
+         imdb.setTitle(title);
+         imdb.setId(titleDto.imdbId());
+         imdb.setScore(titleDto.imdbScore());
+         imdb.setVotes(titleDto.imdbVotes());
+         session.persist(imdb);
+      }
+
+      if (titleDto.tmdbPopularity() != null || titleDto.tmdbScore() != null) {
+         Tmdb tmdb = new Tmdb();
+         tmdb.setTitle(title);
+         tmdb.setId(titleDto.id());
+         tmdb.setPopularity(titleDto.tmdbPopularity());
+         tmdb.setScore(titleDto.tmdbScore());
+         session.persist(tmdb);
+      }
    }
 
    private void load(Session session, CreditDto creditDto) {
