@@ -18,11 +18,17 @@ public class ShowsAndMoviesLogger {
 
    public void chunkExecuted() {
       chunkExecuted++;
-      logger.info("Processed {} chunks. Total {}: {}.", chunkExecuted, operation, chunkExecuted * chunkSize);
+      int logFactor = 10;
+      if (chunkExecuted % logFactor == 0) {
+         logger.info("Processed {} chunks. Total {}: {}.", chunkExecuted, operation, chunkExecuted * chunkSize);
+      }
    }
 
    public void chunkRollback(Throwable t) {
       logger.warn("Chunk rollback.", t);
    }
 
+   public void complete() {
+      logger.info("Processed {} chunks. Total {}: {}. Load completed.", chunkExecuted, operation, chunkExecuted * chunkSize);
+   }
 }

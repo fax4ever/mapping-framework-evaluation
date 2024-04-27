@@ -1,7 +1,10 @@
 package fax.play.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -12,13 +15,16 @@ import javax.persistence.Persistence;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Service;
 
 import fax.play.entity.Country;
 import fax.play.entity.Credit;
 import fax.play.entity.Genre;
+import fax.play.entity.Imdb;
 import fax.play.entity.Person;
 import fax.play.entity.Title;
+import fax.play.entity.Tmdb;
 import fax.play.util.CreditDto;
 import fax.play.util.DatasetLoader;
 import fax.play.util.Platform;
@@ -26,6 +32,9 @@ import fax.play.util.TitleDto;
 
 @Service
 public class ShowsAndMoviesService {
+
+   private static final Class<?>[] ENTITIES =
+         { Country.class, Credit.class, Genre.class, Imdb.class, Person.class, fax.play.entity.Platform.class, Title.class, Tmdb.class };
 
    private final static int CHUNK_SIZE = 50;
 
@@ -39,6 +48,27 @@ public class ShowsAndMoviesService {
    @PreDestroy
    public void preDestroy() {
       sessionFactory.close();
+   }
+
+   public Map<String, Integer> report() {
+      HashMap<String, Integer> report = new LinkedHashMap<>(ENTITIES.length);
+      for (Class<?> entity : ENTITIES) {
+         String name = entity.getSimpleName();
+         int count = count(name);
+         report.put(name, count);
+      }
+      return report;
+   }
+
+   public int count(String entityName) {
+      try (Session session = sessionFactory.openSession()) {
+         Query<Integer> query = session.createQuery("select count(*) from " + entityName);
+         List<Integer> list = query.list();
+         if (list.isEmpty()) {
+            return 0;
+         }
+         return list.get(0);
+      }
    }
 
    public void load(Platform platform) {
@@ -61,6 +91,7 @@ public class ShowsAndMoviesService {
                titlesLogger.chunkRollback(ex);
             }
          });
+         titlesLogger.complete();
       }
 
       Stream<List<CreditDto>> credits = loader.credits(platform, CHUNK_SIZE);
@@ -81,6 +112,7 @@ public class ShowsAndMoviesService {
                creditsLogger.chunkRollback(ex);
             }
          });
+         creditsLogger.complete();
       }
    }
 
@@ -97,7 +129,7 @@ public class ShowsAndMoviesService {
       if (title != null) {
          if (!title.getPlatforms().contains(platformEntity)) {
             title.getPlatforms().add(platformEntity);
-            session.update(title);
+            session.persist(title);
          }
          return;
       }
@@ -140,6 +172,13 @@ public class ShowsAndMoviesService {
    }
 
    private void load(Session session, CreditDto creditDto) {
+      String creditId = Credit.toId(creditDto.personId(), creditDto.titleId(), creditDto.role(), creditDto.character());
+      Credit credit = session.get(Credit.class, creditId);
+      if (credit != null) {
+         // credit already loaded
+         return;
+      }
+
       int personId = creditDto.personId();
       Person person = session.get(Person.class, personId);
       if (person == null) {
@@ -148,12 +187,14 @@ public class ShowsAndMoviesService {
          session.persist(person);
       }
 
-      String creditId = creditDto.titleId();
-      Credit credit = session.load(Credit.class, creditId);
-      if (credit == null) {
-         credit = new Credit();
-         credit.setCharacter(creditDto.character());
-
+      Title title = session.get(Title.class, creditDto.titleId());
+      // title is supposed to have been imported by the load titles
+      // otherwise we cannot create the credit
+      if (title == null) {
+         return;
       }
+
+      credit = new Credit(person, title, creditDto.role(), creditDto.character());
+      session.persist(credit);
    }
 }
