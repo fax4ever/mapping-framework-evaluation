@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import fax.play.util.Role;
 
 @Entity
@@ -17,6 +19,7 @@ public class Credit {
 	private String id;
 
 	@ManyToOne
+	@JsonIgnore // avoid the marshalling on the circular dependency
 	private Person person;
 
 	@ManyToOne
@@ -75,5 +78,17 @@ public class Credit {
 
 	public void setCharacter(String character) {
 		this.character = character;
+	}
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("Credit{");
+		sb.append("id='").append(id).append('\'');
+		sb.append(", person=").append(person);
+		sb.append(", title=").append(title);
+		sb.append(", role=").append(role);
+		sb.append(", character='").append(character).append('\'');
+		sb.append('}');
+		return sb.toString();
 	}
 }

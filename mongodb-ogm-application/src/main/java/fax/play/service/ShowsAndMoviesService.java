@@ -50,6 +50,10 @@ public class ShowsAndMoviesService {
       sessionFactory.close();
    }
 
+   public SessionFactory sessionFactory() {
+      return sessionFactory;
+   }
+
    public Map<String, Integer> report() {
       HashMap<String, Integer> report = new LinkedHashMap<>(ENTITIES.length);
       for (Class<?> entity : ENTITIES) {

@@ -49,4 +49,15 @@ public class Tmdb {
 	public void setTitle(Title title) {
 		this.title = title;
 	}
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("Tmdb{");
+		sb.append("id='").append(id).append('\'');
+		sb.append(", popularity=").append(popularity);
+		sb.append(", score=").append(score);
+		sb.append(", title=").append(title);
+		sb.append('}');
+		return sb.toString();
+	}
 }

@@ -18,8 +18,10 @@ mvn clean install
 
 3. Run the MongoDb Hibernate OGM application
 
+goto [mongodb-ogm-application]
+
 ```shell
-[mongodb-ogm-application] mvn spring-boot:run
+mvn spring-boot:run
 ```
 
 4. See current data report
@@ -32,6 +34,18 @@ http http://localhost:8080/report
 
 ```shell
 http POST http://localhost:8080/load/amazon-prime
+```
+
+6. Find credits, titles by a person's name
+
+```shell
+http --raw "Walt Disney" http://localhost:8080/findCredits
+```
+
+7. Find people (usually one person) having a given name
+
+```shell
+http --raw "Walt Disney" http://localhost:8080/findPeople
 ```
 
 ## Dataset

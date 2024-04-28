@@ -49,4 +49,15 @@ public class Imdb {
 	public void setTitle(Title title) {
 		this.title = title;
 	}
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("Imdb{");
+		sb.append("id='").append(id).append('\'');
+		sb.append(", votes=").append(votes);
+		sb.append(", score=").append(score);
+		sb.append(", title=").append(title);
+		sb.append('}');
+		return sb.toString();
+	}
 }

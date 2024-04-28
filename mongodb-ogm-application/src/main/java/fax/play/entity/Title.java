@@ -126,4 +126,22 @@ public class Title {
 	public void setPlatforms(List<Platform> platforms) {
 		this.platforms = platforms;
 	}
+
+	@Override
+	public String toString() {
+		final StringBuilder sb = new StringBuilder("Title{");
+		sb.append("id='").append(id).append('\'');
+		sb.append(", title='").append(title).append('\'');
+		sb.append(", type=").append(type);
+		sb.append(", description='").append(description).append('\'');
+		sb.append(", releaseYear=").append(releaseYear);
+		sb.append(", ageCertification='").append(ageCertification).append('\'');
+		sb.append(", runtime=").append(runtime);
+		sb.append(", genres=").append(genres);
+		sb.append(", countries=").append(countries);
+		sb.append(", seasons=").append(seasons);
+		sb.append(", platforms=").append(platforms);
+		sb.append('}');
+		return sb.toString();
+	}
 }
