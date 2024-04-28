@@ -36,16 +36,19 @@ http http://localhost:8080/report
 http POST http://localhost:8080/load/amazon-prime
 ```
 
-6. Find credits, titles by a person's name
+6. Given a name of a person, find all credits referred to that person, 
+presenting also the all the titles with scores and details associated to those credits.
 
 ```shell
-http --raw "Walt Disney" http://localhost:8080/findCredits
+http --raw "Oscar Isaac" http://localhost:8080/findCredits
 ```
 
-7. Find people (usually one person) having a given name
+7. Given a genre, return the nth page of size m of all titles ordered by Imdb score in descendant order. 
+Each title should be presented tougher with its credits and the related people. 
+Present also a result object, containing the total hit count and the current request page.
 
 ```shell
-http --raw "Walt Disney" http://localhost:8080/findPeople
+http http://localhost:8080/titlesOrderByScore/genre/scifi/page/1/page-size/10
 ```
 
 ## Dataset

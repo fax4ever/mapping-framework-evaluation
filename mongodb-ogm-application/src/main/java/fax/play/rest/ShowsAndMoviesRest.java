@@ -1,6 +1,5 @@
 package fax.play.rest;
 
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import fax.play.entity.Person;
 import fax.play.service.ShowsAndMoviesQueries;
 import fax.play.service.ShowsAndMoviesService;
 import fax.play.util.Platform;
@@ -44,8 +42,8 @@ public class ShowsAndMoviesRest {
       return queries.findCreditsByPersonName(personName);
    }
 
-   @PostMapping(value = "/findPeople", produces = MediaType.APPLICATION_JSON_VALUE)
-   public List<Person> findPeopleByName(@RequestBody String name) {
-      return queries.findPeopleByName(name);
+   @GetMapping(value = "/titlesOrderByScore/genre/{genre}/page/{pageNumber}/page-size/{pageSize}", produces = MediaType.APPLICATION_JSON_VALUE)
+   public String titlesOrderByScore(@PathVariable("genre") String genre, @PathVariable("pageNumber") int pageNumber, @PathVariable("pageSize") int pageSize) {
+      return queries.titlesOrderByScore(genre, pageNumber, pageSize);
    }
 }
