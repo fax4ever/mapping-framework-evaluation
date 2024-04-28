@@ -16,9 +16,11 @@ Container data is ephemeral, stop and re-run the container to reset all the data
 mvn clean install
 ```
 
-3. Run the MongoDb Hibernate OGM application
+### MongoDB OGM Application
 
-goto [mongodb-ogm-application]
+goto the subproject directory > [mongodb-ogm-application]
+
+3. Run the MongoDb Hibernate OGM application
 
 ```shell
 mvn spring-boot:run
@@ -43,12 +45,18 @@ presenting also the all the titles with scores and details associated to those c
 http --raw "Oscar Isaac" http://localhost:8080/findCredits
 ```
 
-7. Given a genre, return the nth page of size m of all titles ordered by Imdb score in descendant order. 
-Each title should be presented tougher with its credits and the related people. 
-Present also a result object, containing the total hit count and the current request page.
+7. Given a genre, return the nth page of size m of all titles ordered by Tmdb score in descendant order. 
+All title attributes should be presented, including the genres, the countries and the platforms providing it.
 
 ```shell
 http http://localhost:8080/titlesOrderByScore/genre/scifi/page/1/page-size/10
+```
+
+8. Find all movies provided by a given platform having releaseYear included in a range of years.
+All title attributes should be presented, including the genres, the countries and the platforms providing it.
+
+```shell
+http http://localhost:8080/findMovies/platform/disney-plus/start-year/2018/end-year/2019
 ```
 
 ## Dataset

@@ -25,4 +25,10 @@ public class ShowsAndMoviesQueriesTest {
       String titles = queries.titlesOrderByScore("fantasy", 1, 10);
       assertThat(titles).isNotNull();
    }
+
+   @Test
+   public void findMovies() {
+      String movies = queries.findMovies("DISNEY_PLUS", 2018, 2019);
+      assertThat(movies).isNotNull();
+   }
 }
