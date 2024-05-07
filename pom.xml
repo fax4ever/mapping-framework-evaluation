@@ -20,9 +20,9 @@
     </properties>
 
     <modules>
-        <module>mongodb-native-application</module>
-        <module>mongodb-ogm-application</module>
         <module>dataset-util</module>
+        <module>mongodb-ogm-application</module>
+        <module>mongodb-native-application</module>
     </modules>
 
     <dependencyManagement>
