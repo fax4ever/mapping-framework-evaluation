@@ -1,6 +1,8 @@
 package fax.play.service;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.AggregateIterable;
@@ -81,4 +83,13 @@ public class ShowsAndMoviesService {
 		result.allowDiskUse( true );
 		result.toCollection();
 	}
+
+   public Map<String, Long> report() {
+      HashMap<String, Long> report = new HashMap<>(2);
+      MongoClient client = mongoConfiguration.client();
+      MongoDatabase db = client.getDatabase(MOVIES_NATIVE);
+      report.put("people", db.getCollection("people").countDocuments());
+      report.put("titles", db.getCollection("titles").countDocuments());
+      return report;
+   }
 }

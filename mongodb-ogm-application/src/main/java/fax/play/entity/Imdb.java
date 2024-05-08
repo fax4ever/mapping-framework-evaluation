@@ -3,9 +3,12 @@ package fax.play.entity;
 import java.math.BigDecimal;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(indexes = {@Index(columnList = "title_id", name = "title")})
 public class Imdb {
 
 	@Id

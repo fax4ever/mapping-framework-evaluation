@@ -59,6 +59,34 @@ All title attributes should be presented, including the genres, the countries an
 http http://localhost:8080/findMovies/platform/disney-plus/start-year/2018/end-year/2019
 ```
 
+### MongoDB Native Application
+
+goto the subproject directory > [mongodb-ogm-application]
+
+9. Run the MongoDb native application
+
+```shell
+mvn spring-boot:run
+```
+
+10. Run the people pipeline
+
+```shell
+http POST http://localhost:8081/people
+```
+
+11. Run the titles pipeline
+
+```shell
+http POST http://localhost:8081/titles
+```
+
+12. See current data report
+
+```shell
+http http://localhost:8081/report
+```
+
 ## Dataset
 
 * https://www.kaggle.com/api/v1/datasets/download/victorsoeiro/netflix-tv-shows-and-movies?datasetVersionNumber=2
