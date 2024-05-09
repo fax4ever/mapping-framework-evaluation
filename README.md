@@ -87,6 +87,27 @@ http POST http://localhost:8081/titles
 http http://localhost:8081/report
 ```
 
+13. Given a name of a person, find all credits referred to that person,
+   presenting also the all the titles with scores and details associated to those credits.
+
+```shell
+http --raw "Oscar Isaac" http://localhost:8081/findCredits
+```
+
+14. Given a genre, return the nth page of size m of all titles ordered by Tmdb score in descendant order.
+   All title attributes should be presented, including the genres, the countries and the platforms providing it.
+
+```shell
+http http://localhost:8081/titlesOrderByScore/genre/scifi/page/1/page-size/10
+```
+
+15. Find all movies provided by a given platform having releaseYear included in a range of years.
+   All title attributes should be presented, including the genres, the countries and the platforms providing it.
+
+```shell
+http http://localhost:8080/findMovies/platform/disney-plus/start-year/2018/end-year/2019
+```
+
 ## Dataset
 
 * https://www.kaggle.com/api/v1/datasets/download/victorsoeiro/netflix-tv-shows-and-movies?datasetVersionNumber=2
