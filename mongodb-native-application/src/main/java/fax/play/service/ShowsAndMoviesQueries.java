@@ -2,9 +2,10 @@ package fax.play.service;
 
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.exists;
 import static com.mongodb.client.model.Filters.gte;
 import static com.mongodb.client.model.Filters.lte;
-import static com.mongodb.client.model.Sorts.ascending;
+import static com.mongodb.client.model.Sorts.descending;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.FindIterable;
@@ -31,9 +32,9 @@ public class ShowsAndMoviesQueries {
 		MongoClient client = mongoConfiguration.client();
 		MongoDatabase database = client.getDatabase( ShowsAndMoviesService.MOVIES_NATIVE );
 		return database.getCollection( "titles" )
-				.find( eq( "genres", genre ) )
-				.sort( ascending( "imdb.score" ) )
-				.skip( pageNumber * pageSize ).limit( pageSize );
+				.find( and( eq( "genres", genre ), exists( "imdb" ) ) )
+				.sort( descending( "imdb.score" ) )
+				.skip( (pageNumber-1) * pageSize ).limit( pageSize );
 	}
 
 	public FindIterable<Document> findMovies(String platformName, int startYear, int endYear) {
