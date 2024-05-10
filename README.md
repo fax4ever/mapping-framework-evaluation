@@ -1,5 +1,11 @@
 # Mapping Framework Evaluation
 
+## Slides
+
+Project slides:
+
+[slides.pptx](documentation%2Fslides.pptx)
+
 ## Play with the project
 
 1. Run MongoDB server container
