@@ -111,7 +111,36 @@ http http://localhost:8081/titlesOrderByScore/genre/scifi/page/1/page-size/10
    All title attributes should be presented, including the genres, the countries and the platforms providing it.
 
 ```shell
-http http://localhost:8080/findMovies/platform/disney-plus/start-year/2018/end-year/2019
+http http://localhost:8081/findMovies/platform/disney-plus/start-year/2018/end-year/2019
+```
+
+### Compare the times
+
+The queries are exposed using the exact same entry points, so we can run the same HTTP on the two different ports 
+`8080` (for OGM) and `8081` (for the native) and **have an idea** (this is not a performance test!) of the performances.
+
+```shell
+http --raw "Oscar Isaac" http://localhost:8080/findCredits -m
+```
+
+```shell
+http --raw "Oscar Isaac" http://localhost:8081/findCredits -m
+```
+
+```shell
+http http://localhost:8080/titlesOrderByScore/genre/scifi/page/1/page-size/10 -m
+```
+
+```shell
+http http://localhost:8081/titlesOrderByScore/genre/scifi/page/1/page-size/10 -m
+```
+
+```shell
+http http://localhost:8080/findMovies/platform/disney-plus/start-year/2018/end-year/2019 -m
+```
+
+```shell
+http http://localhost:8081/findMovies/platform/disney-plus/start-year/2018/end-year/2019 -m
 ```
 
 ## Dataset
